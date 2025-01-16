@@ -1,5 +1,7 @@
 package org.alicansadeler;
 
+import io.qameta.allure.*;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Slf4j
+@Epic("Pet Store API Test Otomasyonu")
+@Feature("Kullanıcı İşlemleri API Testleri")
 public class UserTests {
 
     private RequestSpecification specification;
@@ -16,9 +20,13 @@ public class UserTests {
     @BeforeClass
     public void setUp() {
         specification = UserEndPoints.userSpec();
+        RestAssured.filters(new AllureRestAssured());
     }
 
     @Test
+    @Story("Yeni kullanıcı oluşturmak isteniyor")
+    @Description("Test sistemde yeni bir kullanıcı oluşturur")
+    @Severity(SeverityLevel.CRITICAL)
     public void createUser() {
         log.info("User oluşturma testi başladı.");
         RestAssured.given()
@@ -33,6 +41,9 @@ public class UserTests {
     }
 
     @Test(dependsOnMethods = {"createUser"})
+    @Story("Kullanıcı sisteme giriş yapmak istiyor")
+    @Description("Test sistemde kullanıcı girişi yapıyor")
+    @Severity(SeverityLevel.BLOCKER)
     public void loginUser() {
         log.info("User login testi başlatıldı");
 
@@ -51,6 +62,9 @@ public class UserTests {
     }
 
     @Test(dependsOnMethods = {"loginUser"})
+    @Story("Kullanıcı sistemden çıkış yapmak istiyor")
+    @Description("Test sisteme giriş yapmış kullanıcıyı çıkarıyor")
+    @Severity(SeverityLevel.NORMAL)
     public void logoutUser() {
         log.info("User logout testi başlatıldı");
 
@@ -66,6 +80,9 @@ public class UserTests {
     }
 
     @Test(dependsOnMethods = {"createUser"})
+    @Story("Kullanıcı bilgileri isteniyor")
+    @Description("Test sistemde kayıtlı kullanıcı bilgilerini getiriyor")
+    @Severity(SeverityLevel.NORMAL)
     public void getUser() {
         log.info("User bilgilerini alma testi başlatıldı");
         RestAssured
@@ -81,6 +98,9 @@ public class UserTests {
     }
 
     @Test(dependsOnMethods = {"createUser", "getUser"})
+    @Story("Kullanıcı bilgilerini güncellemek istiyor")
+    @Description("Test sisteme kayıtlı kullanıcının bilgilerini güncelliyor")
+    @Severity(SeverityLevel.NORMAL)
     public void updateUser() {
         log.info("User bilgilerini güncelleme testi başlatıldı");
         RestAssured
@@ -97,6 +117,9 @@ public class UserTests {
     }
 
     @Test(dependsOnMethods = {"updateUser"})
+    @Story("Kullanıcı hesabını silmek istiyor")
+    @Description("Test sistemde kayıtlı kullanıcıyı siliyor")
+    @Severity(SeverityLevel.CRITICAL)
     public void deleteUser() {
         log.info("User silme testi başlatıldı");
         RestAssured
@@ -110,6 +133,4 @@ public class UserTests {
                 .statusCode(200);
         log.info("User silme testi başarıyla tamamlandı");
     }
-
-
 }
