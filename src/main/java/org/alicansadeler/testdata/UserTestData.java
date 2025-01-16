@@ -22,7 +22,7 @@ public class UserTestData {
                 .username(username)
                 .firstName("Ali")
                 .lastName("Sadeler")
-                .email("ali")
+                .email(username + "@test.com")
                 .password("test123")
                 .phone("1234567890")
                 .userStatus(1)
