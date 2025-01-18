@@ -1,5 +1,5 @@
 ## Postman Collection:
-![PetStoreApi Postman Collection](PetStoreApiTest.postman_collection.json)
+[PetStoreApi Postman Collection](PetStoreApiTest.postman_collection.json)
 
 ---
 
@@ -14,7 +14,7 @@
 ---
 
 ## Jenkins publisher report:
-![Publisher-Report](jenkins-html-publisher-report.pdf)
+[Publisher-Report](jenkins-html-publisher-report.pdf)
 
 ---
 
