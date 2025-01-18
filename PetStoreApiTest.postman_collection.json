@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "10dbb281-af03-4930-b84b-86bb9ed0fcb8",
+		"name": "PetStoreApiTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34646781",
+		"_collection_link": "https://acs000.postman.co/workspace/acs-Workspace~e82965e9-13da-4542-887e-a30f1f3668d3/collection/34646781-10dbb281-af03-4930-b84b-86bb9ed0fcb8?action=share&source=collection_link&creator=34646781"
+	},
+	"item": [
+		{
+			"name": "userTest",
+			"item": [
+				{
+					"name": "getByUserName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/osmanacs3",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"osmanacs3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \r\n    \"username\": \"deleteuser\",\r\n    \"firstName\": \"deleteuser\",\r\n    \"lastName\": \"osmanacs\",\r\n    \"email\": \"osmanacs@yok.com\",\r\n    \"password\": \"123457\",\r\n    \"phone\": \"05444444444\",\r\n    \"userStatus\": 1\r\n  }\r\n\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9223372036854756243,\r\n    \"username\": \"osmanacs3\",\r\n    \"firstName\": \"osmanacs3\",\r\n    \"lastName\": \"osmanacs3\",\r\n    \"email\": \"osmanacs3@yok.com\",\r\n    \"password\": \"123457\",\r\n    \"phone\": \"05444444444\",\r\n    \"userStatus\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/osmanacs",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"osmanacs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/deleteuser",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"deleteuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/login?username=acs&password=123test",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "acs"
+								},
+								{
+									"key": "password",
+									"value": "123test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logoutUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/logout",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
