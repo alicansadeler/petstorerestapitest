@@ -7,9 +7,10 @@ import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.alicansadeler.constants.UserEndPoints;
 import org.alicansadeler.testdata.UserTestData;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import org.alicansadeler.utils.PdfReportUtils;
 @Slf4j
 @Epic("Pet Store API Test Otomasyonu")
 @Feature("Kullanıcı İşlemleri API Testleri")
@@ -29,15 +30,21 @@ public class UserTests {
     @Severity(SeverityLevel.CRITICAL)
     public void createUser() {
         log.info("User oluşturma testi başladı.");
-        RestAssured.given()
-                .spec(specification)
-                .body(UserTestData.getUserWithCustomUsername("viewsonic"))
-                .when()
-                .post(UserEndPoints.CREATE_USER)
-                .then()
-                .log().ifValidationFails()
-                .statusCode(200);
-        log.info("User başarıyla oluşturuldu");
+        try {
+            RestAssured.given()
+                    .spec(specification)
+                    .body(UserTestData.getUserWithCustomUsername("viewsonic"))
+                    .when()
+                    .post(UserEndPoints.CREATE_USER)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200);
+            PdfReportUtils.addTestResult("Create User Test", "PASSED", "200");
+            log.info("User başarıyla oluşturuldu");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Create User Test", "FAILED", e.getMessage());
+            throw e;
+        }
     }
 
     @Test(dependsOnMethods = {"createUser"})
@@ -46,19 +53,23 @@ public class UserTests {
     @Severity(SeverityLevel.BLOCKER)
     public void loginUser() {
         log.info("User login testi başlatıldı");
-
-        RestAssured
-                .given()
-                .spec(specification)
-                .queryParam("username", "viewsonic")
-                .queryParam("password", "test123")
-                .when()
-                .get(UserEndPoints.USER_LOGIN)
-                .then()
-                .log().ifValidationFails()
-                .statusCode(200);
-
-        log.info("User login işlemi başarılı");
+        try {
+            RestAssured
+                    .given()
+                    .spec(specification)
+                    .queryParam("username", "viewsonic")
+                    .queryParam("password", "test123")
+                    .when()
+                    .get(UserEndPoints.USER_LOGIN)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200);
+            PdfReportUtils.addTestResult("Login User Test", "PASSED", "200");
+            log.info("User login işlemi başarılı");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Login User Test", "FAILED", e.getMessage());
+            throw e;
+        }
     }
 
     @Test(dependsOnMethods = {"loginUser"})
@@ -67,16 +78,21 @@ public class UserTests {
     @Severity(SeverityLevel.NORMAL)
     public void logoutUser() {
         log.info("User logout testi başlatıldı");
-
-        RestAssured
-                .given()
-                .spec(specification)
-                .when()
-                .get(UserEndPoints.USER_LOGOUT)
-                .then()
-                .log().ifValidationFails()
-                .statusCode(200);
-        log.info("User logout işlemi başarılı");
+        try {
+            RestAssured
+                    .given()
+                    .spec(specification)
+                    .when()
+                    .get(UserEndPoints.USER_LOGOUT)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200);
+            PdfReportUtils.addTestResult("Logout User Test", "PASSED", "200");
+            log.info("User logout işlemi başarılı");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Logout User Test", "FAILED", e.getMessage());
+            throw e;
+        }
     }
 
     @Test(dependsOnMethods = {"createUser"})
@@ -85,16 +101,22 @@ public class UserTests {
     @Severity(SeverityLevel.NORMAL)
     public void getUser() {
         log.info("User bilgilerini alma testi başlatıldı");
-        RestAssured
-                .given()
+        try {
+            RestAssured
+                    .given()
                     .spec(specification)
                     .pathParam("username", "viewsonic")
-                .when()
+                    .when()
                     .get(UserEndPoints.GET_USER)
-                .then()
-                .log().ifValidationFails()
-                .statusCode(200);
-        log.info("User bilgileri başarili bir şekilde getirildi");
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200);
+            PdfReportUtils.addTestResult("Get User Test", "PASSED", "200");
+            log.info("User bilgileri başarili bir şekilde getirildi");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Get User Test", "FAILED", e.getMessage());
+            throw e;
+        }
     }
 
     @Test(dependsOnMethods = {"createUser", "getUser"})
@@ -103,17 +125,23 @@ public class UserTests {
     @Severity(SeverityLevel.NORMAL)
     public void updateUser() {
         log.info("User bilgilerini güncelleme testi başlatıldı");
-        RestAssured
-                .given()
+        try {
+            RestAssured
+                    .given()
                     .spec(specification)
                     .pathParam("username", "viewsonic")
                     .body(UserTestData.getUserWithCustomUsername("viewsonicUpdate"))
-                .when()
+                    .when()
                     .put(UserEndPoints.UPDATE_USER)
-                .then()
+                    .then()
                     .log().ifValidationFails()
                     .statusCode(200);
-        log.info("User bilgileri başarılı şekilde güncellendi");
+            PdfReportUtils.addTestResult("Update User Test", "PASSED", "200");
+            log.info("User bilgileri başarılı şekilde güncellendi");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Update User Test", "FAILED", e.getMessage());
+            throw e;
+        }
     }
 
     @Test(dependsOnMethods = {"updateUser"})
@@ -122,15 +150,27 @@ public class UserTests {
     @Severity(SeverityLevel.CRITICAL)
     public void deleteUser() {
         log.info("User silme testi başlatıldı");
-        RestAssured
-                .given()
-                .spec(specification)
-                .pathParam("username", "viewsonicUpdate")
-                .when()
-                .delete(UserEndPoints.DELETE_USER)
-                .then()
-                .log().ifValidationFails()
-                .statusCode(200);
-        log.info("User silme testi başarıyla tamamlandı");
+        try {
+            RestAssured
+                    .given()
+                    .spec(specification)
+                    .pathParam("username", "viewsonicUpdate")
+                    .when()
+                    .delete(UserEndPoints.DELETE_USER)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200);
+            PdfReportUtils.addTestResult("Delete User Test", "PASSED", "200");
+            log.info("User silme testi başarıyla tamamlandı");
+        } catch (AssertionError e) {
+            PdfReportUtils.addTestResult("Delete User Test", "FAILED", e.getMessage());
+            throw e;
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        PdfReportUtils.generateFinalReport();
+        log.info("PDF Test raporu oluşturuldu");
     }
 }
